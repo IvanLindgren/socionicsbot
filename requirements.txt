@@ -1,0 +1,8 @@
+python-telegram-bot
+python-dotenv
+tensorflow
+joblib~=1.4.2
+sentence-transformers
+numpy~=2.0.2
+scikit-learn
+tf-keras
