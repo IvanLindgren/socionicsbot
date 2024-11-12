@@ -37,9 +37,9 @@ def inline_buttons():
         InlineKeyboardMarkup: Инлайн-клавиатура с кнопками.
     """
     keyboard = [
-        [InlineKeyboardButton("Добавить Утверждение", callback_data='/add')],
-        [InlineKeyboardButton("Пройти Опросник", callback_data='/oprosnik')],
-        [InlineKeyboardButton("Нейротипирование", callback_data='/neurotype')],
-        [InlineKeyboardButton("Информация", callback_data='/info')]
+        [InlineKeyboardButton("Добавить Утверждение", callback_data='add')],
+        [InlineKeyboardButton("Пройти Опросник", callback_data='oprosnik')],
+        [InlineKeyboardButton("Нейротипирование", callback_data='neurotype')],
+        [InlineKeyboardButton("Информация", callback_data='info')]
     ]
     return InlineKeyboardMarkup(keyboard)
