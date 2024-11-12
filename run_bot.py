@@ -10,6 +10,15 @@ import joblib
 import logging
 import os
 
+gpus = tf.config.experimental.list_physical_devices('CPU')
+if gpus:
+    try:
+        for gpu in gpus:
+            tf.config.experimental.set_memory_growth(gpu, True)
+    except RuntimeError as e:
+        print(e)
+
+
 def main():
     # Настройка логирования (можно перенести в architecture.py)
     logging.basicConfig(

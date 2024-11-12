@@ -95,14 +95,42 @@ async def handle_general_text(update: Update, context: ContextTypes.DEFAULT_TYPE
     # Определение типов, которые согласились и не согласились бы
     agree_disagree = get_agree_disagree_types(probabilities)
 
+    # Определение самых сильных корреляций (по модулю)
+    # Сортируем корреляции по абсолютному значению в порядке убывания
+    sorted_correlations = sorted(correlations.items(), key=lambda item: abs(item[1]), reverse=True)
+    # Берём, например, топ-3 самых сильных корреляций
+    top_n = 3
+    strongest_correlations = sorted_correlations[:top_n]
+
     # Формирование ответа
     reply_text = "📊 *Результаты анализа утверждения*:\n\n"
+
+    # 1. Вывод всех корреляций
+    reply_text += "*Корреляции:*\n"
+    for func, value in correlations.items():
+        reply_text += f"{func}: {value:.4f}\n"
+
+    reply_text += "\n*Характеристики:*\n"
+    for trait, value in traits.items():
+        reply_text += f"{trait}: {value:.4f}\n"
+
+    # 2. Вывод самых сильных корреляций и их характеристик
+    reply_text += f"\n🔝 *Самые сильные корреляции* (по модулю):\n"
+    for func, value in strongest_correlations:
+        # Предполагается, что функция может иметь соответствующую характеристику
+        trait = traits.get(func, "")
+        reply_text += f"{func}: {value:.4f} ({trait})\n"
+
+    # 3. Вывод вероятностей соционических типов
+    reply_text += "\n📈 *Вероятности соционических типов*:\n"
     for type_name, prob in probabilities.items():
         reply_text += f"{type_name}: {prob:.2f}%\n"
 
+    # 4. Вывод согласных и несогласных типов
     reply_text += f"\n👍 *Положительные типы*: {', '.join(agree_disagree['agree'])}\n"
     reply_text += f"👎 *Отрицательные типы*: {', '.join(agree_disagree['disagree'])}\n"
 
+    # Отправка ответа пользователю
     await update.message.reply_text(reply_text, parse_mode='Markdown', reply_markup=main_menu_keyboard())
 
     logging.info(f"Пользователь {username} (ID: {user_id}) получил результаты анализа.")
