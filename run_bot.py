@@ -9,8 +9,6 @@ import tensorflow as tf
 import joblib
 import logging
 import os
-
-
 import tensorflow as tf
 
 
