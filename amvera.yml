@@ -2,10 +2,10 @@ meta:
   environment: python
   toolchain:
     name: pip
-    version: "3.8"
+    version: "3.8"  
 build:
   requirementsPath: requirements.txt
 run:
   scriptName: run_bot.py
   persistenceMount: /data
-  containerPort: "80"
+  containerPort: 80  
